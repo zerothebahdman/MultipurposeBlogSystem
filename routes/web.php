@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('app/create_tag', 'AdminController@addTag');
+Route::get('app/get_tags', 'AdminController@getTag');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::any('{slug}', function () {
     return view('welcome');

@@ -7,7 +7,6 @@
       dark
       src="../img/4884.jpg"
       overflow
-      style="width: 17.5rem;"
     >
       <v-list-item class="px-2 mt-4">
         <span>
@@ -81,7 +80,7 @@ export default {
     drawers: ["Default (no property)"],
     items: [
       { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },
-      { title: "Photos", icon: "mdi-image", route: "/tags" },
+      { title: "Tags", icon: "mdi-tag-plus", route: "/tags" },
       { title: "About", icon: "mdi-help-box" },
     ],
     primaryDrawer: {

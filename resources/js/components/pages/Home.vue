@@ -13,7 +13,7 @@
                 <p class="_1adminOverveiw_card_left_title">Today's News</p>
               </div>
               <div class="_1adminOverveiw_card_right">
-                <Icon type="ios-paper" />
+                <v-icon color="blue">mdi-file-multiple</v-icon>
               </div>
             </div>
           </div>
@@ -28,7 +28,7 @@
                 <p class="_1adminOverveiw_card_left_title">Total News</p>
               </div>
               <div class="_1adminOverveiw_card_right">
-                <Icon type="ios-paper-outline" />
+                <v-icon color="blue">mdi-file-multiple</v-icon>
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@
                 <p class="_1adminOverveiw_card_left_title">Features News</p>
               </div>
               <div class="_1adminOverveiw_card_right">
-                <Icon type="md-copy" />
+                <v-icon color="blue">mdi-file-multiple</v-icon>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@
                 <p class="_1adminOverveiw_card_left_title">Card News</p>
               </div>
               <div class="_1adminOverveiw_card_right">
-                <Icon type="md-list-box" />
+                <v-icon color="blue">mdi-file-multiple</v-icon>
               </div>
             </div>
           </div>
@@ -155,34 +155,11 @@
             </table>
           </div>
         </div>
-        <Page :total="100" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      cards: [
-        {
-          title: "Pre-fab homes",
-          src: "https://cdn.vuetifyjs.com/images/cards/house.jpg",
-          flex: 12,
-        },
-        {
-          title: "Favorite road trips",
-          src: "https://cdn.vuetifyjs.com/images/cards/road.jpg",
-          flex: 6,
-        },
-        {
-          title: "Best airlines",
-          src: "https://cdn.vuetifyjs.com/images/cards/plane.jpg",
-          flex: 6,
-        },
-      ],
-    };
-  },
-};
+export default {};
 </script>

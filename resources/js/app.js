@@ -4,36 +4,20 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-window.Vue = require('vue');
-Vue.use(VueRouter);
-Vue.use(ViewUI);
-import router from './router';
+window.Vue = require("vue");
+import router from "./router";
 
-import ViewUI from 'view-design';
-import 'view-design/dist/styles/iview.css';
+Vue.component("mainapp", require("./components/Mainapp.vue").default);
+Vue.component("navigation", require("./components/pages/Navigation.vue").default);
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+import vuetify from "./vuetify";
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+// import App from './App.vue'
 
 const app = new Vue({
-    el: '#app',
-    router,
+    el: "#app",
+    vuetify,
+    router
 });

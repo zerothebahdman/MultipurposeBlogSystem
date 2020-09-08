@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResources(['tag' => 'API\AdminController']);
+Route::post('edit_tag', 'API\AdminController@editTag');
+Route::post('delete_tag', 'API\AdminController@deleteTag');

@@ -28,6 +28,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "moment": "^2.27.0",
         "sweetalert2": "^10.0.1",
         "vee-validate": "^3.3.9",
         "vue-router": "^3.4.3",

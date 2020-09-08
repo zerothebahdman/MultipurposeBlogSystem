@@ -3,7 +3,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 import home from './components/pages/home';
-import tags from './components/pages/tags';
+import tags from './admin/pages/tags';
 
 const routes = [{
         path: '/',

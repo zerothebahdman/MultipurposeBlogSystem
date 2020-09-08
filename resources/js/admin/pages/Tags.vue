@@ -189,8 +189,10 @@
                             <!-- ITEMS -->
                             <tr v-for="(tag, i) in tags" :key="i">
                                 <td>{{ tag.id }}</td>
-                                <td class="_table_name">{{ tag.tagName }}</td>
-                                <td>{{ tag.created_at }}</td>
+                                <td class="_table_name">
+                                    {{ tag.tagName | upText }}
+                                </td>
+                                <td>{{ tag.created_at | myDate }}</td>
                                 <td>
                                     <v-btn
                                         small

@@ -34,6 +34,7 @@
                       <ValidationObserver ref="observer">
                         <v-form>
                           <v-row justify="center">
+                            <!-- Add category name form modal -->
                             <v-col cols="12" sm="12" md="12" v-show="!editmode">
                               <ValidationProvider
                                 rules="required"
@@ -52,6 +53,8 @@
                                 ></v-text-field>
                               </ValidationProvider>
                             </v-col>
+
+                            <!-- Edit Category Name form modal -->
                             <v-col cols="12" sm="12" md="12" v-show="editmode">
                               <ValidationProvider
                                 rules="required"
@@ -70,6 +73,8 @@
                                 ></v-text-field>
                               </ValidationProvider>
                             </v-col>
+
+                            <!-- Add category modal upload form area -->
                             <v-col v-show="!editmode" cols="12" sm="12" md="12">
                               <Upload
                                 multiple
@@ -86,28 +91,24 @@
                               >
                                 <div style="padding: 20px 0">
                                   <Icon type="ios-cloud-upload" size="52" style="color #3399ff"></Icon>
-                                  <p>
-                                    Click
-                                    or
-                                    drag
-                                    here
-                                    to
-                                    upload
-                                  </p>
+                                  <p>Click or drag here to upload</p>
                                 </div>
                               </Upload>
 
                               <div class="demo-upload-list" v-if="data.image">
-                                <img :src="`/img/uploads/${data.image}`" />
+                                <img :src="`${data.image}`" />
                                 <div class="demo-upload-list-cover">
                                   <Icon type="ios-trash-outline" @click.prevent="deleteImage()"></Icon>
                                 </div>
                               </div>
                             </v-col>
+
+                            <!-- Edit Category Modal upload form area -->
                             <v-col v-show="editmode" cols="12" sm="12" md="12">
                               <Upload
+                                v-show="isIconImageNew"
                                 multiple
-                                ref="uploads"
+                                ref="editDataUploads"
                                 :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
                                 :on-success="handleSuccess"
                                 :on-error="handleError"
@@ -131,10 +132,13 @@
                                 </div>
                               </Upload>
 
-                              <div class="demo-upload-list" v-if="data.image">
-                                <img :src="`/img/uploads/${data.image}`" />
+                              <div class="demo-upload-list" v-if="editData.image">
+                                <img :src="`${editData.image}`" />
                                 <div class="demo-upload-list-cover">
-                                  <Icon type="ios-trash-outline" @click.prevent="deleteImage()"></Icon>
+                                  <Icon
+                                    type="ios-trash-outline"
+                                    @click.prevent="deleteImage(false)"
+                                  ></Icon>
                                 </div>
                               </div>
                             </v-col>
@@ -147,15 +151,11 @@
                 <v-card-actions>
                   <small>*indicates required field</small>
                   <v-spacer></v-spacer>
-                  <v-btn color="error darken-4" @click="dialog = false">Close</v-btn>
+                  <v-btn color="error darken-4" v-show="!editmode" @click="dialog = false">Close</v-btn>
+                  <v-btn color="error darken-4" v-show="editmode" @click="closeCategoryModal">Close</v-btn>
                   <v-btn
                     color="primary darken-4"
-                    @click.prevent="
-                                            editmode
-                                                ? updateCategory()
-                                                : addCategory();
-                                            loader = 'isAdding';
-                                        "
+                    @click.prevent="editmode ? updateCategory() : addCategory(); loader = 'isAdding';"
                     :loading="isAdding"
                     :disabled="isAdding"
                     v-show="!editmode"
@@ -308,11 +308,17 @@ export default {
       deleteItem: {},
       i: -1,
       token: "",
+      isIconImageNew: false,
+      isEditingItem: false,
     };
   },
 
   methods: {
     handleSuccess(res, file) {
+      res = `/img/uploads/${res}`
+      if (this.isEditingItem) {
+        return this.editData.image = res;
+      }
       this.data.image = res;
     },
     handleError(res, file) {
@@ -336,11 +342,25 @@ export default {
         "error"
       );
     },
-    async deleteImage() {
-      console.log(this.data.image);
-      let image = this.data.image
-      this.data.image = ''
-      this.$refs.uploads.clearFiles();
+    async deleteImage(isAdd = true) {
+      let image
+      if (!isAdd) {
+        //   for editing
+        this.isIconImageNew = true;
+        console.log(this.editData.image);
+        image = this.editData.image
+        this.editData.image = ''
+        this.$refs.editDataUploads.clearFiles();
+      } else {
+        console.log(this.data.image);
+        image = this.data.image
+        this.data.image = ''
+        this.$refs.uploads.clearFiles();
+      }
+      //   console.log(this.data.image);
+      //   let image = this.data.image
+      //   this.data.image = ''
+      //   this.$refs.uploads.clearFiles();
       const res = await this.callApi('post', 'api/delete_image', { imageName: image })
       if (res.status != 200) {
         this.data.image = image
@@ -350,32 +370,20 @@ export default {
         });
       }
     },
-    uploadImage(e) {
-      console.log(e);
-      let file = e.target.files[0];
-      let reader = new FileReader();
-      if (file["size"] < 3145728) {
-        reader.onload = file => {
-          this.data.image = reader.result;
-          // console.log("RESULT", reader.result);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        Swal.fire(
-          "Opps!! File Too Large.",
-          "Selected file is above 3MB.",
-          "error"
-        );
-      }
-    },
     editCategoryDialog(category, index) {
       this.editmode = true;
       this.editData.categoryName = "";
       this.dialog = true;
-      this.editData.categoryName = category.categoryName;
-      //   this.data.image = category.image;
+      this.editData = category;
+      //   this.editData.categoryName = category.categoryName;
+      //   this.editData.image = category.image;
       this.editData = Object.assign({}, category);
       this.index = index;
+      this.isEditingItem = true;
+    },
+    closeCategoryModal() {
+      this.isEditingItem = false;
+      this.dialog = false;
     },
     addCategoryDialog() {
       this.editmode = false;
@@ -386,6 +394,14 @@ export default {
 
     async updateCategory() {
       this.$refs.observer.validate();
+      if (this.editData.categoryName.trim() == "") return Toast.fire({
+        icon: "error",
+        title: "Category Name is Required"
+      });
+      if (this.editData.image.trim() == "") return Toast.fire({
+        icon: "error",
+        title: "Image is Required"
+      });
       console.log("Editing Data");
       const res = await this.callApi(
         "put",
@@ -401,13 +417,28 @@ export default {
           title: "Category Updated Successfully"
         });
         this.dialog = false;
-        this.data.categoryName = "";
-        this.data.image = "";
+        this.editData.categoryName = "";
+        this.editData.image = "";
       } else {
-        Toast.fire({
-          icon: "error",
-          title: "An Error Occured"
-        });
+        if (res.status == 422) {
+          if (res.editData.errors.categoryName) {
+            Toast.fire({
+              icon: "error",
+              title: res.editData.errors.categoryName[0]
+            });
+          }
+          if (res.editData.errors.image) {
+            Toast.fire({
+              icon: "error",
+              title: res.editData.errors.image[0]
+            });
+          }
+        } else {
+          Toast.fire({
+            icon: "error",
+            title: "An Error Occured."
+          });
+        }
       }
     },
 
@@ -421,7 +452,7 @@ export default {
         icon: "error",
         title: "Image is Required"
       });
-      this.data.image = `/img/uploads/${this.data.image}`
+      this.data.image = `${this.data.image}`
       const res = await this.callApi("post", "api/category", this.data);
       if (res.status === 201) {
         this.categories.unshift(res.data);
@@ -496,19 +527,40 @@ export default {
 };
 </script>
 <style>
-.demo-upload-list {
-  display: inline-block;
-  width: 300px;
-  height: 180px;
-  text-align: center;
-  line-height: 60px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  overflow: hidden;
-  background: #fff;
-  position: relative;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  margin-right: 4px;
+@media (max-width: 768px) {
+  .demo-upload-list {
+    display: inline-block;
+    width: 300px;
+    height: 180px;
+    text-align: center;
+    line-height: 60px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    margin-right: 4px;
+  }
+}
+@media (min-width: 768px) {
+  .demo-upload-list {
+    display: inline-block;
+    width: 355px;
+    height: 200px;
+    text-align: center;
+    line-height: 60px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
 }
 .demo-upload-list img {
   width: 100%;

@@ -27,20 +27,9 @@ class CategoryController extends Controller
 
         $this->validate($request, [
             'categoryName' => 'required',
-            // 'image' => 'required|mimes:jpeg,png,bimp',
-            'id' => 'required',
+            'image' => 'required',
+            // 'id' => 'required',
         ]);
-        // $category = DB::select('select * from categories');
-        // $currentImage = $category->image;
-        // if($request->image) {
-        //     $name = time().'.'.explode('/', explode(':', substr($request->image, strpos($request->image, ';')))[1])[1];
-        //     \Image::make($request->image)->save(public_path('iconImage/').$name);
-        //     $request->merge(['image' => $name]);
-        //     $userPhoto = public_path('iconImage/').$currentPhoto;
-        //     if (file_exists($userPhoto)) {
-        //         @unlink($userPhoto);
-        //     }
-        // }
         return Category::where('id', $request->id)->update([
             'categoryName' => $request['categoryName'],
             'image' => $request['image'],
@@ -114,24 +103,6 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        // $this->validate($request, [
-        //     'categoryName' => 'required',
-        //     'image' => 'required|mimes:jpeg,png,bimp',
-        //     'id' => 'required',
-        // ]);
-        // if($request->image) {
-        //     $name = time().'.'.explode('/', explode(':', substr($request->image, strpos($request->image, ';')))[1])[1];
-        //     \Image::make($request->image)->save(public_path('iconImage/').$name);
-        //     $request->merge(['image' => $name]);
-        // }
-        // return Category::where('id', $request->id)->update([
-        //     'categoryName' => $request['categoryName'],
-        //     'image' => $request['image'],
-        // ]);
-        // return ['message' => 'Category Updated Successfully'];
-    }
 
     /**
      * Remove the specified resource from storage.

@@ -90,6 +90,10 @@ class AdminController extends Controller
                 return ['message' => 'Tag deleted Successfully'];
     }
 
+    // public function fileUpload(Request $request) {
+    //     return $picName = time().'.'.$request->file->extension();
+    // }
+
     /**
      * Remove the specified resource from storage.
      *

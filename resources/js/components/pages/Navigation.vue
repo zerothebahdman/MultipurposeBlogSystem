@@ -5,7 +5,7 @@
       :clipped="primaryDrawer.clipped"
       app
       dark
-      src="../img/4884.jpg"
+      src="../img/navimage.jpg"
       overflow
     >
       <v-list-item class="px-2 mt-4">
@@ -49,7 +49,7 @@
           v-if="primaryDrawer.type !== 'permanent'"
           @click.stop="primaryDrawer.model = !primaryDrawer.model"
         ></v-app-bar-nav-icon>
-        <v-toolbar-title>Munch Express</v-toolbar-title>
+        <v-toolbar-title>E-Blog</v-toolbar-title>
         <v-spacer></v-spacer>
         <!-- <v-col cols="3" sm="2">
                     <v-text-field
@@ -81,6 +81,7 @@ export default {
     items: [
       { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },
       { title: "Tags", icon: "mdi-tag-plus", route: "/tags" },
+      { title: "Category", icon: "mdi-select-group", route: "/category" },
       { title: "About", icon: "mdi-help-box" },
     ],
     primaryDrawer: {

@@ -31,6 +31,7 @@
         "moment": "^2.27.0",
         "sweetalert2": "^10.0.1",
         "vee-validate": "^3.3.9",
+        "view-design": "^4.3.2",
         "vue-router": "^3.4.3",
         "vuetify": "^2.3.10"
     }

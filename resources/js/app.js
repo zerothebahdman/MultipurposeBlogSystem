@@ -16,7 +16,7 @@ const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
     showConfirmButton: false,
-    timer: 5000,
+    timer: 4000,
     timerProgressBar: true,
     onOpen: toast => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -41,6 +41,10 @@ Vue.component(
     "navigation",
     require("./components/pages/Navigation.vue").default
 );
+
+import ViewUI from "view-design";
+import "view-design/dist/styles/iview.css";
+Vue.use(ViewUI);
 
 import vuetify from "./vuetify";
 

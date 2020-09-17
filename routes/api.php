@@ -18,5 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResources(['tag' => 'API\AdminController']);
+Route::apiResources(['category' => 'API\CategoryController']);
 Route::post('edit_tag', 'API\AdminController@editTag');
+Route::put('edit_category', 'API\CategoryController@editCategory');
 Route::post('delete_tag', 'API\AdminController@deleteTag');
+Route::post('delete_category', 'API\CategoryController@deleteCategory');
+Route::post('upload_file', 'API\CategoryController@upload');
+Route::post('delete_image', 'API\CategoryController@deleteImage');

@@ -159,34 +159,6 @@ h3,
   SELF HOSTED FONTS
   */
 
-@font-face {
-    font-family: 'HK Grotesk';
-    src: url("/static/fonts/hk-grotesk/HKGrotesk-Light.woff2") format("woff2"), url("../fonts/hk-grotesk/HKGrotesk-Light.woff") format("woff");
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HK Grotesk';
-    src: url("/static/fonts/hk-grotesk/HKGrotesk-Bold.woff2") format("woff2"), url("../fonts/hk-grotesk/HKGrotesk-Bold.woff") format("woff");
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HK Grotesk';
-    src: url("/static/fonts/hk-grotesk/HKGrotesk-Regular.woff2") format("woff2"), url("../fonts/hk-grotesk/HKGrotesk-Regular.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'HK Grotesk';
-    src: url("/static/fonts/hk-grotesk/HKGrotesk-Medium.woff2") format("woff2"), url("../fonts/hk-grotesk/HKGrotesk-Medium.woff") format("woff");
-    font-weight: 500;
-    font-style: normal;
-}
-
 /*
    GLOBAL SHARED STYLES
   */
@@ -3565,4 +3537,9 @@ i.cross_icon {
     color: #0099ff !important;
     border-right: 2px solid #0099ff !important;
     background-color: #eaeeea;
+}
+
+.table_image img {
+    width: 70px;
+    height: 50px;
 }

@@ -97,7 +97,7 @@
 
                               <div class="demo-upload-list" v-if="data.image">
                                 <img :src="`${data.image}`" />
-                                <div class="demo-upload-list-cover">
+                                <div class="demo-upload-list-cover" v-show="!editmode">
                                   <Icon type="ios-trash-outline" @click.prevent="deleteImage()"></Icon>
                                 </div>
                               </div>
@@ -121,20 +121,13 @@
                               >
                                 <div style="padding: 20px 0">
                                   <Icon type="ios-cloud-upload" size="52" style="color #3399ff"></Icon>
-                                  <p>
-                                    Click
-                                    or
-                                    drag
-                                    here
-                                    to
-                                    upload
-                                  </p>
+                                  <p>Click or drag here to upload</p>
                                 </div>
                               </Upload>
 
                               <div class="demo-upload-list" v-if="editData.image">
                                 <img :src="`${editData.image}`" />
-                                <div class="demo-upload-list-cover">
+                                <div class="demo-upload-list-cover" v-show="editmode">
                                   <Icon
                                     type="ios-trash-outline"
                                     @click.prevent="deleteImage(false)"
@@ -343,17 +336,17 @@ export default {
       );
     },
     async deleteImage(isAdd = true) {
-      let image
+      let iconImage;
       if (!isAdd) {
         //   for editing
         this.isIconImageNew = true;
         console.log(this.editData.image);
-        image = this.editData.image
-        this.editData.image = ''
+        iconImage = this.editData.image
+        this.editData.image = '';
         this.$refs.editDataUploads.clearFiles();
       } else {
         console.log(this.data.image);
-        image = this.data.image
+        iconImage = this.data.image
         this.data.image = ''
         this.$refs.uploads.clearFiles();
       }
@@ -361,9 +354,9 @@ export default {
       //   let image = this.data.image
       //   this.data.image = ''
       //   this.$refs.uploads.clearFiles();
-      const res = await this.callApi('post', 'api/delete_image', { imageName: image })
+      const res = await this.callApi('post', 'api/delete_image', { imageName: iconImage })
       if (res.status != 200) {
-        this.data.image = image
+        this.data.image = iconImage
         Toast.fire({
           icon: "error",
           title: "Something went wrong"

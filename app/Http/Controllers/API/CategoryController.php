@@ -53,17 +53,21 @@ class CategoryController extends Controller
         $request->file->move(public_path('img/uploads'), $picName);
         return $picName;
     }
-    public function deleteImage(Request $request) {
+    public function deleteImage(Request $request)
+    {
         $fileName = $request->imageName;
-        $this->deleteFileFromServer($fileName);
+        $this->deleteFileFromServer($fileName, false);
         return 'done';
     }
-    public function deleteFileFromServer($fileName){
-        $filePath = public_path().'/img/uploads/'.$fileName;
+    public function deleteFileFromServer($fileName, $hasFullPath = false)
+    {
+        if (!$hasFullPath) {
+            $filePath = public_path() . '/img/uploads/' . $fileName;
+        }
         if (file_exists($filePath)) {
             @unlink($filePath);
         }
-        return 'done';
+        return;
     }
 
     /**

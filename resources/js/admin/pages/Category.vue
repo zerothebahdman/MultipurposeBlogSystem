@@ -402,9 +402,7 @@ export default {
         this.editData
       );
       if (res.status === 200) {
-        this.categories[
-          this.index
-        ].categoryName = this.editData.categoryName;
+        this.categories[this.index] = this.editData;
         Toast.fire({
           icon: "success",
           title: "Category Updated Successfully"

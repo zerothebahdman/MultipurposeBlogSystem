@@ -5,9 +5,9 @@ export default {
         };
     },
     methods: {
-        callApi(method, url, dataObj) {
+        async callApi(method, url, dataObj) {
             try {
-                return axios({
+                return await axios({
                     method: method,
                     url: url,
                     data: dataObj
@@ -16,6 +16,12 @@ export default {
                 return e.response
             }
 
-        }
+        },
+        e(desc, title = "Oops!!") {
+            this.$Notice.error({
+                title: title,
+                desc: desc
+            });
+        },
     },
 }

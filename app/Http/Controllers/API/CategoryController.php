@@ -59,11 +59,9 @@ class CategoryController extends Controller
         $this->deleteFileFromServer($fileName, false);
         return 'done';
     }
-    public function deleteFileFromServer($fileName, $hasFullPath = false)
+    public function deleteFileFromServer($fileName)
     {
-        if (!$hasFullPath) {
-            $filePath = public_path() . '/img/uploads/' . $fileName;
-        }
+        $filePath = public_path() . '/img/uploads/' . $fileName;
         if (file_exists($filePath)) {
             @unlink($filePath);
         }

@@ -82,6 +82,7 @@ export default {
       { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },
       { title: "Tags", icon: "mdi-tag-plus", route: "/tags" },
       { title: "Category", icon: "mdi-select-group", route: "/category" },
+      { title: "Admin Users", icon: "mdi-account-group", route: "/adminusers" },
       { title: "About", icon: "mdi-help-box" },
     ],
     primaryDrawer: {

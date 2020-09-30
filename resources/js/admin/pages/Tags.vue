@@ -55,6 +55,7 @@
                                   label="Tag Name*"
                                   color="purple darken-2"
                                   required
+                                  outlined
                                   hint="This is a required field"
                                 ></v-text-field>
                               </ValidationProvider>
@@ -81,6 +82,7 @@
                                   label="Tag Name*"
                                   color="purple darken-2"
                                   required
+                                  outlined
                                   hint="This is a required field"
                                 ></v-text-field>
                               </ValidationProvider>

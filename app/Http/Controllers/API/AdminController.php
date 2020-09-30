@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Tag;
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -78,8 +79,8 @@ class AdminController extends Controller
             ]);
             return Tag::where('id', $request->id)->update([
                 'tagName' => $request->tagName
-                ]);
-                return ['message' => 'Tag Updated Successfully'];
+            ]);
+            return ['message' => 'Tag Updated Successfully'];
     }
 
     public function deleteTag(Request $request) {
@@ -103,5 +104,46 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function createUsers(Request $request){
+         // Validate Request
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'bail|required|email|unique:users',
+            'password' => 'bail|required|min:6',
+            'userType' => 'required',
+        ]);
+        $password = bcrypt($request->password);
+        $user = User::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => $password,
+                'userType' => $request['userType'],
+            ]);
+        return $user;
+    }
+
+    public function getUsers(){
+        return User::latest()->where('userType', '!=', 'User')->get();
+    }
+    public function editUsers(Request $request){
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => "bail|required|email|unique:users,email,$request->id",
+            'password' => 'min:6',
+            'userType' => 'required',
+        ]);
+        $data = [
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'userType' => $request['userType'],
+        ];
+        if ($request->password) {
+            $password = bcrypt($request->password);
+            $data['password'] = $password;
+        }
+        $user = User::where('id', $request->id)->update($data);
+        return $user;
     }
 }

@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+// Auth::routes();
 // Route::post('app/edit_tag/{id}', 'AdminController@editTag');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::any('{slug}', function () {

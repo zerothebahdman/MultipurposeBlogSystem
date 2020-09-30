@@ -6,6 +6,7 @@ use App\Tag;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -145,5 +146,21 @@ class AdminController extends Controller
         }
         $user = User::where('id', $request->id)->update($data);
         return $user;
+    }
+    public function adminLogin(Request $request){
+        // Validate Request
+        $this->validate($request, [
+            'email' => 'bail|required|email',
+            'password' => 'bail|required|min:6',
+        ]);
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+           return response()->json([
+                'msg' => 'You are Logged in',
+           ]);
+        }else {
+            return response()->json([
+                'msg' => 'Incorrect login details',
+            ], 401);
+        }
     }
 }

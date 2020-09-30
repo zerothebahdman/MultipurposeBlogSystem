@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav v-if="isLoggedIn">
     <v-navigation-drawer
       v-model="primaryDrawer.model"
       :clipped="primaryDrawer.clipped"
@@ -77,6 +77,7 @@
 <script>
 export default {
   data: () => ({
+    isLoggedIn: false,
     drawers: ["Default (no property)"],
     items: [
       { title: "Dashboard", icon: "mdi-view-dashboard", route: "/" },

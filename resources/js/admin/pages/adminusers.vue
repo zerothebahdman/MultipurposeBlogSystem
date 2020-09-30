@@ -220,10 +220,7 @@
 
                   <v-btn
                     color="success darken-4"
-                    @click="
-                                            editmode ? updateUser() : addUser();
-                                            loader = 'isAdding';
-                                        "
+                    @click.prevent="editmode ? updateUser() : addUser(); loader = 'isAdding';"
                     :loading="isAdding"
                     :disabled="isAdding"
                     v-show="editmode"
